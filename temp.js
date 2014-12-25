@@ -193,7 +193,7 @@ window.addEventListener('load', function(evt) {
 			    		}
 			    	}
 			    }
-			}, 500);		        
+			}, 2000);		        
 		};
     	x.send();
 	};

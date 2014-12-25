@@ -36,18 +36,90 @@ function saveOptions() {
 	localStorage['myCals'] = JSON.stringify(myCals);
 }
 
+var getToken = function(){
+	chrome.identity.getAuthToken({ 'interactive': true }, function(token) {
+	      var mytoken = token;
+	      var x = new XMLHttpRequest();
+	      x.open('GET', 'https://www.googleapis.com/calendar/v3/users/me/calendarList?alt=json' + '&access_token=' + token);
+		    x.onload = function(){
+		      if (this.status === 401) {
+		          // This status may indicate that the cached
+		          // access token was invalid.
+		          chrome.identity.removeCachedAuthToken(
+		              { 'token': access_token },
+		              function(){});
+		          return;
+		      }
+
+			  var jsonResponse = JSON.parse(x.response);
+			  var obj = [];
+			  for (var i= 0; i< jsonResponse.items.length; i++){
+			  	if (i == 0)
+			  		obj.push({"name" : jsonResponse.items[i].summary, "selected" : true, "id": jsonResponse.items[i].id});
+			  	else 
+			  		obj.push({"name" : jsonResponse.items[i].summary, "selected" : false, "id": jsonResponse.items[i].id});
+			  }
+			  localStorage['myCals'] = JSON.stringify(obj);
+			  location.reload();
+		  };
+	      x.send();
+	});
+}
+
+var logout = function(){
+	chrome.identity.getAuthToken({ 'interactive': false },
+      function(current_token) {
+        if (!chrome.runtime.lastError) {
+
+          // @corecode_begin removeAndRevokeAuthToken
+          // @corecode_begin removeCachedAuthToken
+          // Remove the local cached token
+          chrome.identity.removeCachedAuthToken({ token: current_token },
+            function() {
+              	localStorage["myName"] = "";
+              	localStorage['myCals'] = "";
+          		//location.reload();
+            });
+          // @corecode_end removeCachedAuthToken
+
+          // Make a request to revoke token in the server
+          var xhr = new XMLHttpRequest();
+          xhr.open('GET', 'https://accounts.google.com/o/oauth2/revoke?token=' +
+                   current_token);
+          xhr.onload = function(){
+          	console.log("logged out");
+          	location.reload();
+          }
+          xhr.send();
+        }
+    });
+}
+
+
 $(document).ready(function(){
-	loadOptions();
-	$('#save').click(function(){
-		saveOptions();
-		$('#name').css({"border" : "3px solid green"});
-		$('#done').css({"display" : "inline"})
-		setTimeout(function(){
-			$('#done').fadeOut();
-		}, 1000);
-	});
-	$('#reset').click(function(){
-		$('#name').css({"border" : "3px solid grey"});
-		document.getElementById("name").value = "";
-	});
+	if (localStorage['myCals'] && localStorage['myCals'] != ""){
+		loadOptions();
+		$('#save').click(function(){
+			saveOptions();
+			$('#name').css({"border" : "3px solid green"});
+			$('#done').css({"display" : "inline"})
+			setTimeout(function(){
+				$('#done').fadeOut();
+			}, 1000);
+		});
+		$('#reset').click(function(){
+			$('#name').css({"border" : "3px solid grey"});
+			document.getElementById("name").value = "";
+		});
+		$('#logout').click(function(){
+			logout();
+		});
+		$('#loggin').hide();
+	} else {
+		$('#login').click(function(){
+			getToken();
+		});;
+		$('#loggedin').hide();
+
+	}
 });

@@ -1,7 +1,7 @@
 {
   "name": "When2Meet Autofill",
   "description": "Autofills your when2meets using you Google Calendar",
-  "version": "0.6",
+  "version": "1.0",
   "permissions": ["contextMenus", "identity", "activeTab", "tabs", "http://*/*", "https://*/*"],
   "manifest_version": 2,
   "background": {
