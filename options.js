@@ -33,35 +33,37 @@ function saveOptions() {
 		myCals[i].selected = false;
 	};
 	myCals[cal].selected = true;
-	localStorage['myCals'] = JSON.stringify(myCals);
+	localStorage["myCals"] = JSON.stringify(myCals);
 }
 
 var getToken = function(){
 	chrome.identity.getAuthToken({ 'interactive': true }, function(token) {
-	      var mytoken = token;
 	      var x = new XMLHttpRequest();
-	      x.open('GET', 'https://www.googleapis.com/calendar/v3/users/me/calendarList?alt=json' + '&access_token=' + token);
+	      x.open('GET', 'https://www.googleapis.com/calendar/v3/users/me/calendarList?alt=json&access_token=' + token);
 		    x.onload = function(){
 		      if (this.status === 401) {
-		          // This status may indicate that the cached
-		          // access token was invalid.
-		          chrome.identity.removeCachedAuthToken(
-		              { 'token': access_token },
-		              function(){});
-		          return;
+	          // This status may indicate that the cached
+	          // access token was invalid.
+	          console.log("removing token");
+	          chrome.identity.removeCachedAuthToken(
+	              { 'token': access_token },
+	              function(){});
+	          return;
 		      }
 
-			  var jsonResponse = JSON.parse(x.response);
-			  var obj = [];
-			  for (var i= 0; i< jsonResponse.items.length; i++){
-			  	if (i == 0)
-			  		obj.push({"name" : jsonResponse.items[i].summary, "selected" : true, "id": jsonResponse.items[i].id});
-			  	else 
-			  		obj.push({"name" : jsonResponse.items[i].summary, "selected" : false, "id": jsonResponse.items[i].id});
-			  }
-			  localStorage['myCals'] = JSON.stringify(obj);
-			  location.reload();
-		  };
+		      chrome.extension.sendMessage({text:"setToken", "token" : token},function(response){});
+
+				  var jsonResponse = JSON.parse(x.response);
+				  var obj = [];
+				  for (var i = 0; i< jsonResponse.items.length; i++){
+				  	if (i == 0)
+				  		obj.push({"name" : jsonResponse.items[i].summary, "selected" : true, "id": jsonResponse.items[i].id});
+				  	else 
+				  		obj.push({"name" : jsonResponse.items[i].summary, "selected" : false, "id": jsonResponse.items[i].id});
+				  }
+				  localStorage["myCals"] = JSON.stringify(obj);
+			  	location.reload();
+		  	};
 	      x.send();
 	});
 }
@@ -71,24 +73,19 @@ var logout = function(){
       function(current_token) {
         if (!chrome.runtime.lastError) {
 
-          // @corecode_begin removeAndRevokeAuthToken
-          // @corecode_begin removeCachedAuthToken
-          // Remove the local cached token
-          chrome.identity.removeCachedAuthToken({ token: current_token },
-            function() {
-              	localStorage["myName"] = "";
-              	localStorage['myCals'] = "[]";
-          		//location.reload();
-            });
-          // @corecode_end removeCachedAuthToken
-
           // Make a request to revoke token in the server
           var xhr = new XMLHttpRequest();
           xhr.open('GET', 'https://accounts.google.com/o/oauth2/revoke?token=' +
                    current_token);
           xhr.onload = function(){
           	console.log("logged out");
-          	location.reload();
+          	// @corecode_begin removeAndRevokeAuthToken
+	          // @corecode_begin removeCachedAuthToken
+	          // Remove the local cached token
+	          chrome.identity.removeCachedAuthToken({ token: current_token },
+	            function() {});
+	          localStorage["myCals"] = JSON.stringify([]);
+	          location.reload();
           }
           xhr.send();
         }

@@ -23,7 +23,7 @@ var getToken = function(){
 			  	else 
 			  		obj.push({"name" : jsonResponse.items[i].summary, "selected" : false, "id": jsonResponse.items[i].id});
 			  }
-			  localStorage['myCals'] = JSON.stringify(obj);
+			  localStorage["myCals"] = JSON.stringify(obj);
 		  };
 	      x.send();
 	});
@@ -34,8 +34,12 @@ getToken();
 chrome.extension.onMessage.addListener(function(message,sender,sendResponse){
   if(message.text == "getStuff"){
     var myName = localStorage['myName'];
-    var obj = JSON.parse(localStorage['myCals']);
+    var cals = localStorage["myCals"];
+    var obj = JSON.parse(cals);
     sendResponse({type: mytoken, name: myName, cal: obj});
+  }
+  if (message.text == "setToken"){
+  	mytoken = message.token;
   }
 });
 

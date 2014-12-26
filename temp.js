@@ -5,11 +5,11 @@ window.addEventListener('load', function(evt) {
 	chrome.extension.sendMessage({text:"getStuff"},function(response){
   		mytoken = response.type;
   		myName = response.name;
-  		for (var i = response.cal.length - 1; i >= 0; i--) {
+  		for (var i = 0; i < response.cal.length; i++) {
   			if (response.cal[i].selected){
   				mycal = response.cal[i].id;
   			}
-  		};
+  		}
   		onAuthorized(mytoken);
 	});
 
