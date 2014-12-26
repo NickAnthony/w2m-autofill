@@ -77,7 +77,7 @@ var logout = function(){
           chrome.identity.removeCachedAuthToken({ token: current_token },
             function() {
               	localStorage["myName"] = "";
-              	localStorage['myCals'] = "";
+              	localStorage['myCals'] = "[]";
           		//location.reload();
             });
           // @corecode_end removeCachedAuthToken
@@ -97,7 +97,7 @@ var logout = function(){
 
 
 $(document).ready(function(){
-	if (localStorage['myCals'] && localStorage['myCals'] != ""){
+	if (localStorage['myCals'] && localStorage['myCals'] != "[]"){
 		loadOptions();
 		$('#save').click(function(){
 			saveOptions();
