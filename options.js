@@ -9,15 +9,15 @@ function loadOptions() {
 
 	var select = document.getElementById("name");
 	select.value = myName;
-
+	console.log(myCals);
 	for(var i=0; i<myCals.length; i++){
 		var name = myCals[i].name;
 		var radioBtn;
-		if (myCals[i].selected){
-			radioBtn = $('<input type="radio" name="calendarPicker" checked="true" id="' + i + '" /><label for="' + i + '">' + name + '</label>');
+		if (myCals[i].selected) {
+			radioBtn = $('<input type="checkbox" name="calendarPicker" checked="true" id="' + i + '" /><label for="' + i + '">' + name + '</label>');
 	    	radioBtn.appendTo('#target');
 	    } else {
-	    	radioBtn = $('<input type="radio" name="calendarPicker" id="' + i + '" /><label for="' + i + '">' + name + '</label>');
+	    	radioBtn = $('<input type="checkbox" name="calendarPicker" id="' + i + '" /><label for="' + i + '">' + name + '</label>');
 	    	radioBtn.appendTo('#target');
 	    }
 	}
@@ -27,12 +27,14 @@ function saveOptions() {
 	var select = document.getElementById("name").value;
 	localStorage["myName"] = select;
 
-	var cal = $('input[name=calendarPicker]:checked').attr('id');
+	var checkedCals = $('input[name=calendarPicker]:checked');
 	var myCals = JSON.parse(localStorage["myCals"]);
 	for (var i = myCals.length - 1; i >= 0; i--) {
 		myCals[i].selected = false;
 	};
-	myCals[cal].selected = true;
+	for (var i = 0; i<checkedCals.length; i++) {
+		myCals[checkedCals[i].id].selected = true;
+	}
 	localStorage["myCals"] = JSON.stringify(myCals);
 }
 
@@ -51,15 +53,12 @@ var getToken = function(){
 	          return;
 		      }
 
-		      chrome.extension.sendMessage({text:"setToken", "token" : token},function(response){});
+		      chrome.extension.sendMessage({text:"setToken", "token" : token}, function(response){});
 
 				  var jsonResponse = JSON.parse(x.response);
 				  var obj = [];
 				  for (var i = 0; i< jsonResponse.items.length; i++){
-				  	if (i == 0)
 				  		obj.push({"name" : jsonResponse.items[i].summary, "selected" : true, "id": jsonResponse.items[i].id});
-				  	else 
-				  		obj.push({"name" : jsonResponse.items[i].summary, "selected" : false, "id": jsonResponse.items[i].id});
 				  }
 				  localStorage["myCals"] = JSON.stringify(obj);
 			  	location.reload();

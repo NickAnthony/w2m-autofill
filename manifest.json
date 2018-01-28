@@ -12,7 +12,7 @@
     "default_icon": "icon-16.png"
   },
   "oauth2": {
-    "client_id": "956653605342-j06g91bicbnvhidhfjaltgkgkf9l4fao.apps.googleusercontent.com",
+    "client_id": "605145089075-vurk2j8cmtsti7l10ao6q04oeat856ng.apps.googleusercontent.com",
     "scopes": ["https://www.googleapis.com/auth/calendar", "https://www.googleapis.com/auth/calendar.readonly"]
   },
   "content_scripts": [{ "matches": ["*://www.when2meet.com/?*"],
