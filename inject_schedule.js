@@ -1,5 +1,15 @@
+chrome.runtime.onMessage.addListener(
+	function(request, sender, sendResponse) {
+		if (request.text == "loadTheGCal"){
+			loadAndInsertCalendars();
+			sendResponse({text: "Calendars have been loaded."});
+		}
+	}
+);
 
-window.addEventListener('load', function(evt) {
+
+// window.addEventListener('load', function(evt) { });
+function loadAndInsertCalendars() {
 	var mytoken;
 	var myName;
 	var mycals;
@@ -58,13 +68,13 @@ window.addEventListener('load', function(evt) {
 		console.log("id_num: ", id_num);
 
 
-		console.log("meetingTimes: ", meetingTimes);
-		console.log("ABOUT TO LOG IN");
-		var temp = document.getElementById('name');
-		temp.value = myName;
-		var scriptNode  = document.createElement('script');
-		scriptNode.textContent = "ProcessLogin();";
-		document.body.appendChild(scriptNode);
+		// console.log("meetingTimes: ", meetingTimes);
+		// console.log("ABOUT TO LOG IN");
+		// var temp = document.getElementById('name');
+		// temp.value = myName;
+		// var scriptNode  = document.createElement('script');
+		// scriptNode.textContent = "ProcessLogin();";
+		// document.body.appendChild(scriptNode);
 
 		setTimeout(function(){
 			for(var a = 0; a < meetingTimes.length; a++) {
@@ -172,7 +182,7 @@ window.addEventListener('load', function(evt) {
 		for (var i=0; i<targetNumLoaded; i++){
 			request_array[i]= new XMLHttpRequest();
 		}
-		
+
 		var curCal = -1;
 		// Loop through calendars and import events
 		for (var i=0; i<mycals.length; i++) {
@@ -287,11 +297,9 @@ window.addEventListener('load', function(evt) {
 			};
 			request_array[curCal].send();
 		}
-
-		
 	};
-});
-
+}
+//});
 
 
 
