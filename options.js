@@ -13,16 +13,43 @@ function loadOptions() {
 	for(var i=0; i<myCals.length; i++){
 		var name = myCals[i].name;
 		var radioBtn;
-		if (i%2 == 0){
-			radioBtn = $('<input type="checkbox" name="calendarPicker" checked="true" id="' + i + '" /><label for="' + i + '">' + name + '</label> <br/>');
+
+		// Default: select all calendars except those that break loading
+
+		if (isCalThatBreaks(name)) {
+			if (i%2 == 0){
+				radioBtn = $('<input type="checkbox" name="calendarPicker" id="' + i + '" /><label for="' + i + '">' + name + '</label> <br/>');
+			}
+			else {
+				radioBtn = $('<input type="checkbox" name="calendarPicker" id="' + i + '" /><label style="padding-right:2em;" for="' + i + '">' + name + '</label>');
+			}
 		}
 		else {
-			radioBtn = $('<input type="checkbox" name="calendarPicker" checked="true" id="' + i + '" /><label style="padding-right:2em;" for="' + i + '">' + name + '</label>');
+			if (i%2 == 0){
+				radioBtn = $('<input type="checkbox" name="calendarPicker" checked="true" id="' + i + '" /><label for="' + i + '">' + name + '</label> <br/>');
+			}
+			else {
+				radioBtn = $('<input type="checkbox" name="calendarPicker" checked="true" id="' + i + '" /><label style="padding-right:2em;" for="' + i + '">' + name + '</label>');
+			}
 		}
-		
+    	
 	    radioBtn.appendTo('#target');
 		myCals[i].selected = true;
 	}
+}
+
+// Searches calendar name for the keyword
+// Prevents loading of calendars that break loading
+function isCalThatBreaks(name) {
+	console.log(name);
+	var error_keywords = ["Holiday", "holiday", "entre rotation", "Blue Room", "Contacts", "entree", "Episcopal"];
+	for (var i = 0; i < error_keywords.length; i++) {
+		console.log(name.search(error_keywords[i]), error_keywords[i]);
+		if (name.search(error_keywords[i]) >= 0){
+			return true
+		}
+	}
+	return false	
 }
 
 function saveOptions() {
