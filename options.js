@@ -13,7 +13,13 @@ function loadOptions() {
 	for(var i=0; i<myCals.length; i++){
 		var name = myCals[i].name;
 		var radioBtn;
-		radioBtn = $('<input type="checkbox" name="calendarPicker" checked="true" id="' + i + '" /><label for="' + i + '">' + name + '</label>');
+		if (i%2 == 0){
+			radioBtn = $('<input type="checkbox" name="calendarPicker" checked="true" id="' + i + '" /><label for="' + i + '">' + name + '</label> <br/>');
+		}
+		else {
+			radioBtn = $('<input type="checkbox" name="calendarPicker" checked="true" id="' + i + '" /><label style="padding-right:2em;" for="' + i + '">' + name + '</label>');
+		}
+		
 	    radioBtn.appendTo('#target');
 		myCals[i].selected = true;
 	}
