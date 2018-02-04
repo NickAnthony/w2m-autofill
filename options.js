@@ -18,18 +18,18 @@ function loadOptions() {
 
 		if (isCalThatBreaks(name)) {
 			if (i%2 == 0){
-				radioBtn = $('<input type="checkbox" name="calendarPicker" id="' + i + '" /><label for="' + i + '">' + name + '</label> <br/>');
+				radioBtn = $('<li><input type="checkbox" name="calendarPicker" id="' + i + '" /><label for="' + i + '">' + name + '</label> </li>');
 			}
 			else {
-				radioBtn = $('<input type="checkbox" name="calendarPicker" id="' + i + '" /><label style="padding-right:2em;" for="' + i + '">' + name + '</label>');
+				radioBtn = $('<li><input type="checkbox" name="calendarPicker" id="' + i + '" /><label style="padding-right:2em;" for="' + i + '">' + name + '</label> </li>');
 			}
 		}
 		else {
 			if (i%2 == 0){
-				radioBtn = $('<input type="checkbox" name="calendarPicker" checked="true" id="' + i + '" /><label for="' + i + '">' + name + '</label> <br/>');
+				radioBtn = $('<li><input type="checkbox" name="calendarPicker" checked="true" id="' + i + '" /><label for="' + i + '">' + name + '</label> </li>');
 			}
 			else {
-				radioBtn = $('<input type="checkbox" name="calendarPicker" checked="true" id="' + i + '" /><label style="padding-right:2em;" for="' + i + '">' + name + '</label>');
+				radioBtn = $('<li><input type="checkbox" name="calendarPicker" checked="true" id="' + i + '" /><label style="padding-right:2em;" for="' + i + '">' + name + '</label> </li>');
 			}
 		}
     	
