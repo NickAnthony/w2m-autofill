@@ -13,13 +13,9 @@ function loadOptions() {
 	for(var i=0; i<myCals.length; i++){
 		var name = myCals[i].name;
 		var radioBtn;
-		if (myCals[i].selected) {
-			radioBtn = $('<input type="checkbox" name="calendarPicker" checked="true" id="' + i + '" /><label for="' + i + '">' + name + '</label>');
-	    	radioBtn.appendTo('#target');
-	    } else {
-	    	radioBtn = $('<input type="checkbox" name="calendarPicker" id="' + i + '" /><label for="' + i + '">' + name + '</label>');
-	    	radioBtn.appendTo('#target');
-	    }
+		radioBtn = $('<input type="checkbox" name="calendarPicker" checked="true" id="' + i + '" /><label for="' + i + '">' + name + '</label>');
+	    radioBtn.appendTo('#target');
+		myCals[i].selected = true;
 	}
 }
 
@@ -95,6 +91,7 @@ var logout = function(){
 $(document).ready(function(){
 	if (localStorage['myCals'] && localStorage['myCals'] != "[]"){
 		loadOptions();
+		saveOptions();
 		$('#save').click(function(){
 			saveOptions();
 			$('#name').css({"border" : "3px solid green"});
