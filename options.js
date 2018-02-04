@@ -17,20 +17,10 @@ function loadOptions() {
 		// Default: select all calendars except those that break loading
 
 		if (isCalThatBreaks(name)) {
-			if (i%2 == 0){
-				radioBtn = $('<li><input type="checkbox" name="calendarPicker" id="' + i + '" /><label for="' + i + '">' + name + '</label> </li>');
-			}
-			else {
-				radioBtn = $('<li><input type="checkbox" name="calendarPicker" id="' + i + '" /><label style="padding-right:2em;" for="' + i + '">' + name + '</label> </li>');
-			}
+			radioBtn = $('<li><input type="checkbox" name="calendarPicker" id="' + i + '" /><label for="' + i + '">' + name + '</label> </li>');
 		}
 		else {
-			if (i%2 == 0){
-				radioBtn = $('<li><input type="checkbox" name="calendarPicker" checked="true" id="' + i + '" /><label for="' + i + '">' + name + '</label> </li>');
-			}
-			else {
-				radioBtn = $('<li><input type="checkbox" name="calendarPicker" checked="true" id="' + i + '" /><label style="padding-right:2em;" for="' + i + '">' + name + '</label> </li>');
-			}
+			radioBtn = $('<li><input type="checkbox" name="calendarPicker" checked="true" id="' + i + '" /><label for="' + i + '">' + name + '</label> </li>');
 		}
     	
 	    radioBtn.appendTo('#target');
