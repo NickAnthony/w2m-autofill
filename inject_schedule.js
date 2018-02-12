@@ -1,19 +1,21 @@
 chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
-		if (request.text == "loadTheGCal"){
+		if (request.text == "loadGCalData"){
 			loadAndInsertCalendars();
 			sendResponse({text: "Calendars have been loaded."});
+		}
+		if (request.text == "login"){
+			sendResponse({text: "Hello from the context script."});
 		}
 	}
 );
 
 
-// window.addEventListener('load', function(evt) { });
 function loadAndInsertCalendars() {
 	var mytoken;
 	var myName;
 	var mycals;
-	chrome.extension.sendMessage({text:"getStuff"},function(response){
+	chrome.runtime.sendMessage({ text:"getGCalData" }, function(response){
 		mytoken = response.type;
 		myName = response.name;
 		mycals = response.cal;
@@ -83,12 +85,13 @@ function loadAndInsertCalendars() {
 						var indexTime = (startDate.getTime() - (date.getTimezoneOffset() * 60 * 1000))/1000 + 86400*a + 15*60*b;
 						var scriptNode  = document.createElement('script');
 						scriptNode.textContent = "\
+							IsMouseDown = true; \
 							AvailableAtSlot[TimeOfSlot.indexOf(" + indexTime + ")].push(UserID);\
 							ToCol = Col[TimeOfSlot.indexOf(" + indexTime + ")];\
 							ToRow = Row[TimeOfSlot.indexOf(" + indexTime + ")];\
 							FromCol = ToCol;\
 							FromRow = ToRow;\
-							ChangeToAvailable = 1;\
+							ChangeToAvailable = true;\
 							ReColorIndividual();\
 							";
 						document.body.appendChild(scriptNode);
@@ -121,6 +124,7 @@ function loadAndInsertCalendars() {
 				  asynchronous:true,\
 				  onSuccess:function(t) { console.log('Successfully added times'); }\
 				});\
+				SelectStop();\
 				IsMouseDown=false;\
 				FromCol=-1; ToCol=-1; FromRow=-1; ToRow=-1;\
 				ReColorIndividual();\
@@ -130,7 +134,7 @@ function loadAndInsertCalendars() {
 		}, 3000);
 	}
 
-	function onAuthorized(token) {
+	function onAuthorized (token) {
 		console.log("token:", token);
 		var date = new Date();
 
@@ -299,8 +303,6 @@ function loadAndInsertCalendars() {
 		}
 	};
 }
-//});
-
 
 
 

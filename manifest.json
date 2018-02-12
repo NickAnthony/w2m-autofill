@@ -2,7 +2,16 @@
   "name": "When2Meet Autofill",
   "description": "Autofills your when2meets using you Google Calendar",
   "version": "1.0.2",
-  "permissions": ["contextMenus", "identity", "activeTab", "tabs", "http://*/*", "https://*/*"],
+  "permissions": [
+    "contextMenus",
+    "storage",
+    "identity",
+    "activeTab",
+    "tabs",
+    "http://*/*",
+    "https://*/*",
+    "https://accounts.google.com/*",
+    "https://www.googleapis.com/*"],
   "manifest_version": 2,
   "background": {
     "persistent": false,
@@ -13,9 +22,10 @@
     "default_popup": "popup.html"
   },
   "oauth2": {
-    "client_id": "605145089075-vurk2j8cmtsti7l10ao6q04oeat856ng.apps.googleusercontent.com",
+    "client_id": "107748213396-42thmd9igq8bs5hah4jidp9b5dvcipk2.apps.googleusercontent.com",
     "scopes": ["https://www.googleapis.com/auth/calendar", "https://www.googleapis.com/auth/calendar.readonly"]
   },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAk4ub7Comd4y0v3rkkRs6GPGv4EGapwgGJqRfHY4h2YqiLRLlrqLcB1iRbrypKcmvj/b0X9a9h/4qUse/H60SeqfjnALt73HHkRf/LYhnCjGu77axZMU1vNgFkt6mm/kKqDRXUIzqxpVrs84P++7JJF+CNouVJX8BxxcHX80VV6/cLH4ihA3cJYR9KGoZRCCbjkYB3rV8Ox/eYQ/4uee2nbXOvA3rrDQFKCdq1zhJhP7rqyXSorPRbBiBlew7spua3VBvQWmdxE3pAcSwTBc+Z2lzczAverDxlZrVnYsZbrArgVsJk3ZI8VtLbPFyyIHKNP1HPlm0kuuzZ7pewtLG1QIDAQAB",
   "content_scripts": [{ "matches": ["*://www.when2meet.com/?*"],
       "js": ["jquery-2.1.1.min.js", "inject_schedule.js"],"run_at": "document_start"}],
   "icons": { "16": "icon-16.png", "128": "icon-128.png" },
