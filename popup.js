@@ -6,20 +6,22 @@ document.addEventListener('DOMContentLoaded',  () => {
                 console.log(response.text);
             });
         });
-
-        // This code is used to display all calendars within the popup window
-        // Load the list of currently selected calendars
-        // var cal_list = document.getElementById('myCals');
-        // if (cal_list.childNodes.length > 0){
-        //     var myCals = JSON.parse(localStorage["myCals"]);
-        //     for(var i=0; i<myCals.length; i++){
-        //         var name = myCals[i].name;
-        //         var radioBtn = $('<input type="checkbox" name="calendarPicker" checked="true" id="' + i + '" /><label for="' + i + '">' + name + '</label> <br/>');
-        //         radioBtn.appendTo('#calList');
-        //         myCals[i].selected = true;
-        //     }
-        // }
     });
+
+    // This code is used to display all calendars within the popup window
+    // Load the list of currently selected calendars
+    var cal_list = document.getElementById('calList');
+    console.log("cal_list.childNodes.length:", cal_list.childNodes.length);
+    if (cal_list.childNodes.length <= 3){
+        var myCals = JSON.parse(localStorage["myCals"]);
+        for(var i=0; i<myCals.length; i++){
+            if (myCals[i].selected) {
+                var name = myCals[i].name;
+                var radioBtn = $('<div name="calendarPicker" id="' + i + '" /><label for="' + i + '">' + name + '</label> <br/>');
+                radioBtn.appendTo('#calList');
+            }
+        }
+    }
 
     // Handle Google Account Signin
     var signin_button = document.getElementById("popupSignInBtn");
@@ -30,9 +32,4 @@ document.addEventListener('DOMContentLoaded',  () => {
 
     });
 });
-
-
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
 

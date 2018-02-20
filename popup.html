@@ -21,11 +21,18 @@
       h1 {
         font-size: 15px;
       }
+      h2 {
+        font-size: 12px;
+      }
 
       #container {
         align-items: center;
         display: flex;
+        flex-direction: column;
         justify-content: space-between;
+      }
+      #container > * {
+        margin: 0.5em 0;
       }
     </style>
 
@@ -40,7 +47,9 @@
       <div id="loadingIcon"></div>
       <a id="popupSignInBtn" class="waves-effect waves-light btn">Sign In</a>
       <a id="loadButton" class="waves-effect waves-light btn">Load My Google Cal</a>
-      <div id="calList"></div>
+      <div id="calList">
+        <h2 style="text-align:center;">Calendars loaded:</h2>
+      </div>
     </div>
   </body>
 </html>
