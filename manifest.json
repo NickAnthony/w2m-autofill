@@ -25,7 +25,7 @@
     "client_id": "107748213396-42thmd9igq8bs5hah4jidp9b5dvcipk2.apps.googleusercontent.com",
     "scopes": ["https://www.googleapis.com/auth/calendar", "https://www.googleapis.com/auth/calendar.readonly"]
   },
-  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAk4ub7Comd4y0v3rkkRs6GPGv4EGapwgGJqRfHY4h2YqiLRLlrqLcB1iRbrypKcmvj/b0X9a9h/4qUse/H60SeqfjnALt73HHkRf/LYhnCjGu77axZMU1vNgFkt6mm/kKqDRXUIzqxpVrs84P++7JJF+CNouVJX8BxxcHX80VV6/cLH4ihA3cJYR9KGoZRCCbjkYB3rV8Ox/eYQ/4uee2nbXOvA3rrDQFKCdq1zhJhP7rqyXSorPRbBiBlew7spua3VBvQWmdxE3pAcSwTBc+Z2lzczAverDxlZrVnYsZbrArgVsJk3ZI8VtLbPFyyIHKNP1HPlm0kuuzZ7pewtLG1QIDAQAB",
+  "key":"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA3J+mJjzFORvYO//Ew60QV5wF2FrUxiHt7Bgd7Ny1S5jnrme70mToYlgh5aHcJ3zbIn8Zm2HfSBQFwr0frq4lw+F7fNMVqJX8LnY4NJaRDR+tO7VkkH/gPXiudCpY/Pt4ggsTJdnOfLRWIQDjdZcITtxLKxDQ+yjyP1j+oJxXEDzdj6NlLSnTlQR4n/dLXoWw/Bvbugv1tWC1cEQIDzEYCOjKLROXaaa7vo2lmVDErF/nvXmxi2v1wR5YDWJWgguXjIE4vt4UI4AvNCEofnI2pkSQN8Z4VsBMoMFbdCjQatuLgH1lnH1zU/kE5fPs4Jkfop7h4+FT+BA170mYgEVdlQIDAQAB",
   "content_scripts": [{ "matches": ["*://www.when2meet.com/?*"],
       "js": ["jquery-2.1.1.min.js", "inject_schedule.js"],"run_at": "document_start"}],
   "icons": { "16": "icon-16.png", "128": "icon-128.png" },
