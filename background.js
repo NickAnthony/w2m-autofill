@@ -17,7 +17,7 @@ var bgtoken;
 function getTokenFromBG() {
 	chrome.identity.getAuthToken({ 'interactive': true }, function(token) {
 		localStorage['token'] = token;
-		bgtoken = token;
+		bgtoken = localStorage['token'];
 		var x = new XMLHttpRequest();
 		x.open('GET', 'https://www.googleapis.com/calendar/v3/users/me/calendarList?alt=json' + '&access_token=' + bgtoken);
 		x.onload = function(){
@@ -62,7 +62,7 @@ chrome.runtime.onMessage.addListener(function(request,sender,sendResponse){
     var myName = localStorage['myName'];
     var cals = localStorage["myCals"];
     var obj = JSON.parse(cals);
-    sendResponse({type: bgtoken, name: myName, cal: obj});
+    sendResponse({type: localStorage['token'], name: myName, cal: obj});
   }
   if (request.text == "setToken"){
   	bgtoken = request.token;
