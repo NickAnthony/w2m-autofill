@@ -1,7 +1,8 @@
 w2m-autofill
 ============
-by Pranav Vishnu Ramabhadran
+by [Nick Anthony](https://github.com/NickAnthony) and [Todd Ashley](https://github.com/toddkashley)
+
+Forked from original project by Pranav Vishnu Ramabhadran, from [here](https://github.com/pvrnav/w2m-autofill).
 ----------------------------
 
-This Chrome Extension hooks into your Google Calendar and lets you autofill [when2meets](http://www.when2meet.com) using your calendar info. You can download it from the Chrome Store [here](https://chrome.google.com/webstore/detail/when2meet-autofill/cmbibnmlbbkijffhjpbacdgpdodfjjfp).
-Please feel free to fork and add in other calendars as well!
+This Chrome Extension hooks into your Google Calendar and lets you autofill [when2meets](http://www.when2meet.com) using your calendar info. Coming soon to the chrome store.
