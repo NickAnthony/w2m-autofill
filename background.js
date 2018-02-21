@@ -4,7 +4,6 @@ function isCalThatBreaks(name) {
 	console.log(name);
 	var error_keywords = ["Holiday", "holiday", "entre rotation", "Blue Room", "Contacts", "entree", "Episcopal"];
 	for (var i = 0; i < error_keywords.length; i++) {
-		console.log(name.search(error_keywords[i]), error_keywords[i]);
 		if (name.search(error_keywords[i]) >= 0){
 			return true
 		}
