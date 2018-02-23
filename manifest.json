@@ -1,7 +1,7 @@
 {
   "name": "When2Meet Plus",
   "description": "Autofills your when2meets using you Google Calendar",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "permissions": [
     "contextMenus",
     "storage",

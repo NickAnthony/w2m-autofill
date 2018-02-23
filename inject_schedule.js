@@ -41,7 +41,6 @@ function loadAndInsertCalendars() {
 				var eDay = eStartDay - (startDate.getDay() -1);
 					
 				for(var b = startIndex; b < startIndex + durationIndex; b++){
-					console.log("eDay: ", eDay, " b: ", b);
 					meetingTimes[eDay][b] = true;
 				}
 			} else if (eFinishHour >= startDate.getHours()){
@@ -67,7 +66,6 @@ function loadAndInsertCalendars() {
 		}
 
 		var id_num = cur_url.substring(i+1, i+8);
-		console.log("id_num: ", id_num);
 
 
 		// console.log("meetingTimes: ", meetingTimes);
@@ -135,7 +133,6 @@ function loadAndInsertCalendars() {
 	}
 
 	function onAuthorized (token) {
-		console.log("token:", token);
 		var date = new Date();
 
 		/*** Get the times for the current when to meet event. ***/
@@ -188,8 +185,10 @@ function loadAndInsertCalendars() {
 		}
 
 		var curCal = -1;
+
 		// Loop through calendars and import events
 		for (var i=0; i<mycals.length; i++) {
+			chrome.runtime.sendMessage({text: "updateLoadStatus", loadStatus: ((i+1)/mycals.length)}, function(response) {});
 			if (!mycals[i].selected) { 
 				continue;
 			};
@@ -207,9 +206,8 @@ function loadAndInsertCalendars() {
 
 				console.log("numCalLoaded: ", numCalLoaded);
 
-				numCalLoaded++;
 				// Update the number of calendars loaded
-				console.log("x.onload --- --- --- --- --- --- --");
+				numCalLoaded++;
 
 				var jsonResponse = JSON.parse(request_array[curCal].response);
 				if (request_array[curCal].response == undefined)
@@ -295,7 +293,6 @@ function loadAndInsertCalendars() {
 				}
 				// If all the calenders have loaded, display them in the schedule
 				if (numCalLoaded >= targetNumLoaded) {
-					console.log("eventlist: ", eventlist);
 					loadCalendars(meetingTimes, eventlist, startDate, date);
 				}
 			};

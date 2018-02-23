@@ -57,35 +57,6 @@ function saveOptions() {
 	localStorage["myCals"] = JSON.stringify(myCals);
 }
 
-var getToken = function(){
-	chrome.identity.getAuthToken({ 'interactive': true }, function(token) {
-	      var x = new XMLHttpRequest();
-	      x.open('GET', 'https://www.googleapis.com/calendar/v3/users/me/calendarList?alt=json&access_token=' + token);
-		    x.onload = function(){
-		      if (this.status === 401) {
-	          // This status may indicate that the cached
-	          // access token was invalid.
-	          console.log("removing token");
-	          chrome.identity.removeCachedAuthToken(
-	              { 'token': access_token },
-	              function(){});
-	          return;
-		      }
-
-		      chrome.extension.sendMessage({text:"setToken", "token" : token}, function(response){});
-
-				  var jsonResponse = JSON.parse(x.response);
-				  var obj = [];
-				  for (var i = 0; i< jsonResponse.items.length; i++){
-				  		obj.push({"name" : jsonResponse.items[i].summary, "selected" : true, "id": jsonResponse.items[i].id});
-				  }
-				  localStorage["myCals"] = JSON.stringify(obj);
-			  	location.reload();
-		  	};
-	      x.send();
-	});
-}
-
 var logout = function(){
 	chrome.identity.getAuthToken({ 'interactive': false },
       function(current_token) {
@@ -133,9 +104,13 @@ $(document).ready(function(){
 		$('#loggin').hide();
 	} else {
 		$('#login').click(function(){
-			getToken();
+			chrome.runtime.sendMessage({text: "login"}, function(response) {
+	            if (response.text == "logged in!") {
+	                localStorage["loggedIn"] = "true";
+	            }
+	        });
 		});;
-		$('#loggedin').hide();
+		//$('#loggedin').hide();
 
 	}
 });

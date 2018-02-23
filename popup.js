@@ -1,9 +1,13 @@
 document.addEventListener('DOMContentLoaded',  () => { 
+
     var load_button = document.getElementById("loadButton");
     load_button.addEventListener("click", function() {
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
             chrome.tabs.sendMessage(tabs[0].id, {text: "loadGCalData"}, function(response) {
                 loadCalendarsToPopup();
+                // Show progress bar
+                var progress_bar = document.getElementById("progressbar");
+                progress_bar.style.display = "block";
             });
         });
     });
@@ -27,7 +31,6 @@ document.addEventListener('DOMContentLoaded',  () => {
 
     signin_button.addEventListener("click", function() {
         chrome.runtime.sendMessage({text: "login"}, function(response) {
-            console.log(response);
             if (response.text == "logged in!") {
                 localStorage["loggedIn"] = "true";
                 if (response.name) {
@@ -41,6 +44,24 @@ document.addEventListener('DOMContentLoaded',  () => {
     });
 });
 
+
+// Once the calendars are loaded in the background, load them into the popup screen
+chrome.runtime.onMessage.addListener(function(request,sender,sendResponse){
+  if(request.text == "calsLoaded"){
+    loadCalendarsToPopup();
+  }
+  if(request.text == "updateLoadStatus"){
+    // Update the loading bar status
+    var progress_width = document.getElementById("progresswidth");
+    var progress_bar = document.getElementById("progressbar");
+    if ((request.loadStatus)*100 >= 99){
+        progress_bar.style.display = "none";
+    }
+    else {
+        progress_width.style.width = String((request.loadStatus)*100)+ '%';
+    }
+  }
+});
 
 function loadCalendarsToPopup(){
     var cal_list = document.getElementById('calList');

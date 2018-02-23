@@ -51,6 +51,7 @@ function getTokenFromBG() {
 				}
 			}
 			localStorage["myCals"] = JSON.stringify(obj);
+			chrome.runtime.sendMessage({text: "calsLoaded"}, function(response) {});
 		};
 		x.send();
 	});
