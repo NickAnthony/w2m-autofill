@@ -174,13 +174,12 @@ function loadAndInsertCalendars() {
 		for (var i=0; i<mycals.length; i++) {
 			if (mycals[i].selected) { 
 				targetNumLoaded++;
-				
 			}; 
 		}
 
 		var request_array = new Array(targetNumLoaded);
 		var response_array = new Array(targetNumLoaded);
-		for (var i=0; i<targetNumLoaded; i++){
+		for (var i=0; i <= targetNumLoaded + 1; i++){
 			request_array[i]= new XMLHttpRequest();
 		}
 
@@ -224,7 +223,7 @@ function loadAndInsertCalendars() {
 					var eventstart2 = new Date(eventstart);
 					var eventend = end['dateTime'];
 					var eventend2 = new Date(eventend);
-					if(entry['start'] !== undefined && entry.start.dateTime !== undefined && eventstart2.getDay() >= startDate.getDay() && eventstart2.getDay() <= finishDate.getDay()){
+					if(entry['start'] !== undefined && entry.start !== undefined && entry.start.dateTime !== undefined && eventstart2.getDay() >= startDate.getDay() && eventstart2.getDay() <= finishDate.getDay()){
 						var tup = {
 							"start" : {
 								"day"  : eventstart2.getDay()-1, 
