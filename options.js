@@ -59,24 +59,25 @@ function saveOptions() {
 
 var logout = function(){
 	chrome.identity.getAuthToken({ 'interactive': false },
-      function(current_token) {
-        if (!chrome.runtime.lastError) {
+      	function(current_token) {
+        	if (!chrome.runtime.lastError) {
 
-          // Make a request to revoke token in the server
-          var xhr = new XMLHttpRequest();
-          xhr.open('GET', 'https://accounts.google.com/o/oauth2/revoke?token=' +
+          	// Make a request to revoke token in the server
+          	var xhr = new XMLHttpRequest();
+          	xhr.open('GET', 'https://accounts.google.com/o/oauth2/revoke?token=' +
                    current_token);
-          xhr.onload = function(){
-          	console.log("logged out");
-          	// @corecode_begin removeAndRevokeAuthToken
-	          // @corecode_begin removeCachedAuthToken
-	          // Remove the local cached token
-	          chrome.identity.removeCachedAuthToken({ token: current_token },
-	            function() {});
-	          localStorage["myCals"] = JSON.stringify([]);
-	          location.reload();
-          }
-          xhr.send();
+          	xhr.onload = function(){
+          		localStorage["loggedIn"] = "false";
+	          	console.log("logged out");
+				// @corecode_begin removeAndRevokeAuthToken
+				// @corecode_begin removeCachedAuthToken
+				// Remove the local cached token
+				chrome.identity.removeCachedAuthToken({ token: current_token },
+				function() {});
+				localStorage["myCals"] = JSON.stringify([]);
+				location.reload();
+			}
+          	xhr.send();
         }
     });
 }

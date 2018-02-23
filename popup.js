@@ -26,6 +26,9 @@ document.addEventListener('DOMContentLoaded',  () => {
     if (localStorage["loggedIn"] == "true") {
         signin_button.innerHTML = "You are signed in.";
     }
+    else {
+        signin_button.innerHTML = "Sign In";
+    }
 
     console.log("localStorage['loggedIn']", localStorage["loggedIn"]);
 
@@ -60,6 +63,13 @@ chrome.runtime.onMessage.addListener(function(request,sender,sendResponse){
     else {
         progress_width.style.width = String((request.loadStatus)*100)+ '%';
     }
+  }
+  console.log("request.text: ", request.text);
+  if(request.text == "loggedOut"){
+    console.log("Logged Out");
+    localStorage["loggedIn"] = "false";
+    var signin_button = document.getElementById("popupSignInBtn");
+    signin_button.innerHTML = "Sign In";
   }
 });
 
